@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "652843927236",
+    "project_id": "we-chat-app-82fd1",
+    "storage_bucket": "we-chat-app-82fd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652843927236:android:9df9c2f5ac5f9b1b8f2b91",
+        "android_client_info": {
+          "package_name": "com.padc.we_chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "652843927236-gfb14vc5rq41am7mpmavu08hqhnmkub8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy7hkWfoid7SLQocCC8RCn3vlMwCt5aTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "652843927236-gfb14vc5rq41am7mpmavu08hqhnmkub8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
