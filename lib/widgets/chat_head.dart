@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
 
+import '../blocs/chat_bloc.dart';
+import '../data/vos/message_vo.dart';
+import '../data/vos/user_vo.dart';
+
 class ChatHead extends StatelessWidget {
- double? circleWidth;
- double? circleHeight;
- double? positionedTop;
- double? positionedLeft;
- double? whiteBgWidth;
- double? whiteBgHeight;
- double? greenBgWidth;
- double? greenBgHeight;
+  double? circleWidth;
+  double? circleHeight;
+  double? positionedTop;
+  double? positionedLeft;
+  double? whiteBgWidth;
+  double? whiteBgHeight;
+  double? greenBgWidth;
+  double? greenBgHeight;
 
+  String? userProfile;
 
- ChatHead(
-      {super.key,required this.circleWidth,
-        required this.circleHeight,
-        required this.positionedTop,
-        required this.positionedLeft,
-        required this.whiteBgWidth,
-        required this.whiteBgHeight,
-        required this.greenBgWidth,
-        required this.greenBgHeight});
+  ChatHead(
+      {super.key,
+      required this.circleWidth,
+      required this.circleHeight,
+      required this.positionedTop,
+      required this.positionedLeft,
+      required this.whiteBgWidth,
+      required this.whiteBgHeight,
+      required this.greenBgWidth,
+      required this.greenBgHeight,
+      required this.userProfile});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +40,7 @@ class ChatHead extends StatelessWidget {
           ),
           clipBehavior: Clip.antiAlias,
           child: Image.network(
-            "https://djmag.com/sites/default/files/styles/djm_23_961x540_jpg/public/2022-12/313293606_687343572750643_8093509681171904781_n.jpg?itok=FEtOGQH6",
+           userProfile??"",
             fit: BoxFit.cover,
           ),
         ),

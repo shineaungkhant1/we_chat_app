@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:we_chat_app/data/vos/message_vo.dart';
 import 'package:we_chat_app/data/vos/moment_vo.dart';
 
 import '../data/vos/user_vo.dart';
@@ -24,7 +25,8 @@ abstract class SocialDataAgent {
   Future<List<String>> getOTP(String otp);
   Stream<List<UserVO>> getContactsOfLoggedInUser();
 
-  ///QR Scan
+  /// QR Scan
   Future<void> addNewContactToScanner(UserVO userVo);
   Future<void> addNewContactToScannedUser(UserVO userVo);
+
 }

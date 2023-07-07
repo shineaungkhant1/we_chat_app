@@ -15,7 +15,7 @@ const usersCollection = "users";
 const fileUploadRef = "uploads";
 
 /// QR Collection
-const contactsCollection="contacts";
+const contactsCollection = "contacts";
 
 class CloudFireStoreDataAgentImpl extends SocialDataAgent {
   /// FireStore
@@ -63,8 +63,7 @@ class CloudFireStoreDataAgentImpl extends SocialDataAgent {
         .get()
         .asStream()
         .where((documentSnapShot) => documentSnapShot.data() != null)
-        .map((documentSnapShot) =>
-        MomentVO.fromJson(documentSnapShot.data()!));
+        .map((documentSnapShot) => MomentVO.fromJson(documentSnapShot.data()!));
   }
 
   @override
@@ -95,7 +94,7 @@ class CloudFireStoreDataAgentImpl extends SocialDataAgent {
             credential.user?..updateDisplayName(newUser.userName))
         .then((user) {
       newUser.id = user?.uid ?? "";
-      newUser.qrCode =user?.uid ?? "";
+      newUser.qrCode = user?.uid ?? "";
       _addNewUser(newUser);
     });
   }
@@ -120,12 +119,11 @@ class CloudFireStoreDataAgentImpl extends SocialDataAgent {
   @override
   UserVO getLoggedInUser() {
     return UserVO(
-      id: auth.currentUser?.uid,
-      email: auth.currentUser?.email,
-      userName: auth.currentUser?.displayName,
-      phoneNumber: auth.currentUser?.phoneNumber,
-      gender: auth.currentUser?.photoURL
-    );
+        id: auth.currentUser?.uid,
+        email: auth.currentUser?.email,
+        userName: auth.currentUser?.displayName,
+        phoneNumber: auth.currentUser?.phoneNumber,
+        gender: auth.currentUser?.photoURL);
   }
 
   @override
@@ -139,9 +137,7 @@ class CloudFireStoreDataAgentImpl extends SocialDataAgent {
         .collection("users")
         .doc(userId.toString())
         .get()
-        .then((documentSnapShot) =>  UserVO.fromJson(documentSnapShot.data()!));
-
-
+        .then((documentSnapShot) => UserVO.fromJson(documentSnapShot.data()!));
   }
 
   @override
@@ -203,18 +199,4 @@ class CloudFireStoreDataAgentImpl extends SocialDataAgent {
       }).toList();
     });
   }
-
-  // Stream<List<MomentVO>> getMoment() {
-  //   return _fireStore
-  //       .collection(momentsCollection)
-  //       .snapshots()
-  //       .map((querySnapShot) {
-  //     return querySnapShot.docs.map<MomentVO>((document) {
-  //       return MomentVO.fromJson(document.data());
-  //     }).toList();
-  //   });
-  // }
-
-
-
 }

@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:we_chat_app/blocs/contact_bloc.dart';
 import 'package:we_chat_app/pages/add_new_contact_page.dart';
 import 'package:we_chat_app/pages/add_new_group_page.dart';
+import 'package:we_chat_app/pages/convo_page.dart';
 import 'package:we_chat_app/resources/dimens.dart';
 import 'package:we_chat_app/widgets/a_to_z.dart';
 import 'package:we_chat_app/widgets/group_list.dart';
@@ -22,10 +24,11 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage> {
+  UserVO? userVO;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ContactBloc(),
+      create: (context) => ContactBloc(userVO??UserVO()),
       child: Consumer<ContactBloc>(
         builder: (context, bloc, child) {
 
@@ -50,7 +53,7 @@ class _ContactPageState extends State<ContactPage> {
                         height: MARGIN_MEDIUM_2,
                       ),
                       Text(
-                        "(${bloc.contactUsers?.length.toString() ?? "0"})",
+                        "( ${bloc.contactUsers?.length.toString() ?? "0"} )",
                         style: const TextStyle(
                           fontFamily: YORKIE_FONT,
                           fontWeight: FontWeight.w600,
@@ -141,17 +144,21 @@ class _ContactPageState extends State<ContactPage> {
                                       ? ListView.builder(
                                           shrinkWrap: true,
                                           itemCount: bloc.alphabetsStartByName
-                                                  ?.length ??
-                                              0,
+                                                  ?.length,
                                           scrollDirection: Axis.vertical,
                                           itemBuilder: (context, index) {
                                             return Padding(
                                               padding: const EdgeInsets.only(
                                                   top: MARGIN_MEDIUM_2),
                                               child:
-                                                  ContactChatHeadAndNameVerticalListView(
+                                                  GestureDetector(
+                                                    onTap: (){
+                                                      _navigateToChatRoomPage(context, bloc.contactUsers?[index]);
+                                                    },
+                                                    child: ContactChatHeadAndNameVerticalListView(
                                                 isAddNewGroupPage: false, user: bloc.contactUsers?[index],
                                               ),
+                                                  ),
                                             );
                                           },
                                         )
@@ -288,3 +295,6 @@ class _ContactPageState extends State<ContactPage> {
     );
   }
 }
+ void _navigateToChatRoomPage(BuildContext context,UserVO? user){
+  Navigator.push(context, MaterialPageRoute(builder: (context)=>ConvoPage(userVO: user,),),);
+ }

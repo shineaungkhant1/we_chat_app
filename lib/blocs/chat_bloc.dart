@@ -1,21 +1,15 @@
-
-
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
-import 'package:we_chat_app/data/models/social_model_impl.dart';
+import 'package:flutter/material.dart';
 import 'package:we_chat_app/data/vos/user_vo.dart';
 
 import '../data/models/authentication_model.dart';
 import '../data/models/authentication_model_impl.dart';
 import '../data/models/social_model.dart';
+import '../data/models/social_model_impl.dart';
 import '../data/vos/message_vo.dart';
 
-class ContactBloc extends ChangeNotifier {
-  /// States
-  List<UserVO>? contactUsers;
-  List<dynamic>? alphabetsStartByName;
-  bool isDisposed = false;
+class ChatBloc extends ChangeNotifier {
   String loggedInUserId = "";
   String sentUserId = "";
   File? selectedImageFile;
@@ -24,12 +18,28 @@ class ContactBloc extends ChangeNotifier {
   String message = "";
   String userProfile="";
   List<MessageVO>? messages;
+
   bool isMessageError = false;
+
+  bool isDisposed = false;
+
   bool isLoading = false;
 
   /// Model
   final SocialModel _model = SocialModelImpl();
   final AuthenticationModel _authenticationModel = AuthenticationModelImpl();
+
+  ChatBloc(UserVO? userVO) {
+    loggedInUserId = _authenticationModel.getLoggedInUser().id ?? "";
+    sentUserId = userVO?.id ?? "";
+
+    _model.getMessages(loggedInUserId, sentUserId).listen((messages) {
+      // this.messages = messages;
+      this.messages = List.of((messages).reversed.toList());
+      print("LISTMESSAGE=====>${this.messages?.first}");
+      _notifySafely();
+    });
+  }
 
   void onFileChosen(File file) {
     var fileFormat = file.path.split("/").last.split(".").last;
@@ -84,23 +94,4 @@ class ContactBloc extends ChangeNotifier {
     super.dispose();
     isDisposed = true;
   }
-
-  ContactBloc(UserVO userVO) {
-    _model.getContactsOfLoggedInUser().listen((users) {
-      contactUsers = users;
-      alphabetsStartByName = users.map((user) => user.userName?[0] ?? "").toSet().toList();
-      _notifySafely();
-    });
-    loggedInUserId = _authenticationModel.getLoggedInUser().id ?? "";
-    sentUserId = userVO?.id ?? "";
-
-    _model.getMessages(loggedInUserId, sentUserId).listen((messages) {
-      // this.messages = messages;
-      this.messages = List.of((messages).reversed.toList());
-      print("LISTMESSAGE=====>${this.messages?.first}");
-      _notifySafely();
-    });
-  }
-
-
 }
